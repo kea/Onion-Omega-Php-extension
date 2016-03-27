@@ -47,24 +47,24 @@ PHP extension for Onion Omega IoT device https://onion.io/
     $ echo "src-git onion https://github.com/OnionIoT/OpenWRT-Packages.git" >> feeds.conf.default
     $ scripts/feeds update -a
     $ scripts/feeds install php5
+    $ scripts/feeds install libonionpwmexp
     
     $ make tools/install # when menuconfig start, select language->php->php5 as M, php5-cli as M
     $ make toolchain/install
     $ make package/php5/compile
+    $ make package/i2c-exp-driver/compile
 
 ## Configure the extension
 
     $ export PATH=/usr/local/openwrt/staging_dir/host/bin/:/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin:$PATH
+    $ export TOOLCHAIN_DIR="/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2"
+    $ export STAGING_DIR="/usr/local/openwrt/staging_dir/target-mips_34kc_uClibc-0.9.33.2"
+    $ export TARGET_DIR="/usr/local/openwrt/build_dir/target-mips_34kc_uClibc-0.9.33.2/php-5.6.16"
+
     $ cd /vagrant/src
-    $ /usr/local/openwrt/staging_dir/host/usr/bin/phpize
-
-    $ rm aclocal.m4 && aclocal && autoconf
-
     $ /usr/local/openwrt/staging_dir/host/usr/bin/phpize --clean && /usr/local/openwrt/staging_dir/host/usr/bin/phpize && \
-    ./configure --with-php-config=/usr/local/openwrt/staging_dir/host/usr/bin/php-config  '--target=mips-openwrt-linux' '--host=mips-openwrt-linux' '--build=x86_64-linux-gnu' '--exec-prefix=/vagrant/src/phpsrc/staging/usr' 'build_alias=x86_64-linux-gnu' 'host_alias=mips-openwrt-linux' 'target_alias=mips-openwrt-linux' \
-    TOOLCHAIN_DIR="/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2" \
-    STAGING_DIR="/usr/local/openwrt/staging_dir/target-mips_34kc_uClibc-0.9.33.2" \
-    TARGET_DIR="/usr/local/openwrt/build_dir/target-mips_34kc_uClibc-0.9.33.2/php-5.6.16" \
+    rm aclocal.m4 && aclocal && autoconf \
+    ./configure --with-php-config=/usr/local/openwrt/staging_dir/host/usr/bin/php-config  '--target=mips-openwrt-linux' '--host=mips-openwrt-linux' '--build=x86_64-linux-gnu' 'build_alias=x86_64-linux-gnu' 'host_alias=mips-openwrt-linux' 'target_alias=mips-openwrt-linux' \
     CC="mips-openwrt-linux-uclibc-gcc" \
     CFLAGS="-Os -pipe -mno-branch-likely -mips32r2 -mtune=34kc -fno-caller-saves -fhonour-copts -Wno-error=unused-but-set-variable -Wno-error=unused-result -msoft-float"  \
     LDFLAGS="-L$TARGET_DIR/usr/lib -L$TARGET_DIR/lib -L$TOOLCHAIN_DIR/usr/lib -L$TOOLCHAIN_DIR/lib -L$TARGET_DIR/usr/lib/libiconv-stub/lib -L$TARGET_DIR/usr/lib/libintl-stub/lib -L$STAGING_DIR/usr/lib" \
@@ -72,7 +72,7 @@ PHP extension for Onion Omega IoT device https://onion.io/
     CXX="mips-openwrt-linux-uclibc-g++" \
     CXXFLAGS="-Os  -pipe -mno-branch-likely -mips32r2 -mtune=34kc -fno-caller-saves -fhonour-copts -Wno-error=unused-but-set-variable -Wno-error=unused-result -msoft-float" \
     LIBTOOL='/usr/local/openwrt/tools/libtool --tag=CC' \
-    PWM_DIR='/usr/local/openwrt/staging_dir/target-mips_34kc_uClibc-0.9.33.2/usr'
+    OMEGA_DIR='/usr/local/openwrt/staging_dir/target-mips_34kc_uClibc-0.9.33.2/usr'
 
 ## Compile it
 
@@ -80,13 +80,13 @@ PHP extension for Onion Omega IoT device https://onion.io/
 
 ## Copy the module to Onion Ω
 
-    $ scp pwm.so root@onion-ABCD.local:
+    $ scp modules/omega.so root@onion-ABCD.local:
 
 ## Verify installation
 
-    $ ssh root@onion-ABCD.local
-    $ php-cli -d extension=/root/pwm.so -m
+    $ ssh root@omega-ABCD.local
+    $ php-cli -d extension=/root/omega.so -m
 
-You should see "pwm" as part of the loaded extension.
+You should see "omega" as part of the loaded extension.
 
-    $ php-cli -d extension=/root/pwm.so test.php
+    $ php-cli -d extension=/root/omega.so test.php

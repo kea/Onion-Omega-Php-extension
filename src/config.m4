@@ -1,47 +1,47 @@
-dnl config.m4 for pwm
+dnl config.m4 for omega
 
-PHP_ARG_ENABLE(pwm, whether to enable pwm support,
-[  --enable-pwm          Enable pwm support])
+PHP_ARG_ENABLE(omega, whether to enable omega support,
+[  --enable-omega          Enable omega support])
 
-if test "$PHP_PWM" != "no"; then
+if test "$PHP_OMEGA" != "no"; then
 
-    SEARCH_PATH="$PHP_PWM /usr/local /usr"
+    SEARCH_PATH="$PHP_OMEGA /usr/local /usr"
     SEARCH_FOR="include/pwm-exp.h"
 
     AC_MSG_CHECKING([for pwm include files])
-    if test -r $PWM_DIR/$SEARCH_FOR; then # path given as parameter
-      PWM_DIR=$PWM_DIR
-      AC_MSG_RESULT(found in $PWM_DIR)
+    if test -r $OMEGA_DIR/$SEARCH_FOR; then # path given as parameter
+      OMEGA_DIR=$OMEGA_DIR
+      AC_MSG_RESULT(found in $OMEGA_DIR)
     else
       for i in $SEARCH_PATH ; do
         if test -r $i/$SEARCH_FOR; then
-          PWM_DIR=$i
+          OMEGA_DIR=$i
           AC_MSG_RESULT(found in $i)
         fi
       done
     fi
-    if test -z "$PWM_DIR"; then
+    if test -z "$OMEGA_DIR"; then
       AC_MSG_RESULT([not found])
       AC_MSG_ERROR([Please reinstall the libonionpwmexp distribution])
     fi
 
-    PHP_ADD_INCLUDE($PWM_DIR/include)
+    PHP_ADD_INCLUDE($OMEGA_DIR/include)
 
     LIB_NAME=onionpwmexp
     LIB_SYMBOL=pwmCheckInit
 
     PHP_CHECK_LIBRARY($LIB_NAME,$LIB_SYMBOL,
     [
-      PHP_ADD_LIBRARY_WITH_PATH($LIB_NAME, $PWM_DIR, PWM_SHARED_LIBADD)
+      PHP_ADD_LIBRARY_WITH_PATH($LIB_NAME, $OMEGA_DIR, OMEGA_SHARED_LIBADD)
       AC_DEFINE(HAVE_PWM,1,[ ])
     ],[
       AC_MSG_ERROR([wrong libonionpwmexp lib version or lib not found])
     ],[
-      -L$PWM_DIR/lib -l$LIB_NAME -lonioni2c -loniondebug -lm
+      -L$OMEGA_DIR/lib -l$LIB_NAME -lonioni2c -loniondebug -lm
     ])
 
-    PHP_SUBST(PWM_SHARED_LIBADD)
+    PHP_SUBST(OMEGA_SHARED_LIBADD)
 
-    PHP_NEW_EXTENSION(pwm, php_pwm.c, $ext_shared)
-    PHP_SUBST(PWM_SHARED_LIBADD)
+    PHP_NEW_EXTENSION(omega, php_omega.c php_pwm.c, $ext_shared)
+    PHP_SUBST(OMEGA_SHARED_LIBADD)
 fi
