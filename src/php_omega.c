@@ -8,6 +8,7 @@
 
 #include "php_omega.h"
 #include "php_pwm.h"
+#include "php_oled.h"
 
 phpOnionSetVerbosity(long verbosity)
 {
@@ -35,6 +36,23 @@ zend_function_entry omega_functions[] =
     ZEND_FE(pwmDisableChip, NULL)
     ZEND_FE(pwmSetFrequency, arginfo_pwmSetFrequency)
     ZEND_FE(pwmSetupDriver, arginfo_pwmSetupDriver)
+
+    ZEND_FE(oledCheckInit, NULL)
+    ZEND_FE(oledDriverInit, NULL)
+    ZEND_FE(oledClear, NULL)
+    ZEND_FE(oledSetDisplayPower, arginfo_oledSetDisplayPower)
+    ZEND_FE(oledSetDisplayMode, arginfo_oledSetDisplayMode)
+    ZEND_FE(oledSetBrightness, arginfo_oledSetBrightness)
+    ZEND_FE(oledSetDim, arginfo_oledSetDim)
+    ZEND_FE(oledSetMemoryMode, arginfo_oledSetMemoryMode)
+    ZEND_FE(oledSetCursor, arginfo_oledSetCursor)
+    ZEND_FE(oledSetColumnAddressing, arginfo_oledSetColumnAddressing)
+    ZEND_FE(oledWriteChar, arginfo_oledWriteChar)
+    ZEND_FE(oledWrite, arginfo_oledWrite)
+    ZEND_FE(oledDrawFromFile, arginfo_oledDrawFromFile)
+    ZEND_FE(oledScroll, arginfo_oledScroll)
+    ZEND_FE(oledScrollDiagonal, arginfo_oledScrollDiagonal)
+    ZEND_FE(oledScrollStop, NULL)
 
     {NULL,NULL,NULL} /* Marks the end of function entries */
 };

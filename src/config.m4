@@ -40,8 +40,19 @@ if test "$PHP_OMEGA" != "no"; then
       -L$OMEGA_DIR/lib -l$LIB_NAME -lonioni2c -loniondebug -lm
     ])
 
-    PHP_SUBST(OMEGA_SHARED_LIBADD)
+    LIB_OLED_NAME=onionoledexp
+    LIB_OLED_SYMBOL=oledCheckInit
 
-    PHP_NEW_EXTENSION(omega, php_omega.c php_pwm.c, $ext_shared)
+    PHP_CHECK_LIBRARY($LIB_OLED_NAME,$LIB_OLED_SYMBOL,
+    [
+      PHP_ADD_LIBRARY_WITH_PATH($LIB_OLED_NAME, $OMEGA_DIR, OMEGA_SHARED_LIBADD)
+      AC_DEFINE(HAVE_OLED,1,[ ])
+    ],[
+      AC_MSG_ERROR([wrong libonionoledexp lib version or lib not found])
+    ],[
+      -L$OMEGA_DIR/lib -l$LIB_OLED_NAME -lonioni2c -loniondebug -lm
+    ])
+
+    PHP_NEW_EXTENSION(omega, php_omega.c php_pwm.c php_oled.c, $ext_shared)
     PHP_SUBST(OMEGA_SHARED_LIBADD)
 fi

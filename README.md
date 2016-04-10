@@ -20,6 +20,23 @@ PHP extension for Onion Omega IoT device https://onion.io/
     pwmSetFrequency(float freq);
     pwmSetupDriver(int driverNum, float duty, float delay);
     
+    oledCheckInit();
+    oledDriverInit();
+    oledClear();
+    oledSetDisplayPower($bOn);
+    oledSetDisplayMode($bInvert);
+    oledSetBrightness($brightness);
+    oledSetDim($bDim);
+    oledSetMemoryMode($mode);
+    oledSetCursor($row, $col);
+    oledSetColumnAddressing($startPixel, $endPixel);
+    oledWriteChar($char);
+    oledWrite($string);
+    oledDrawFromFile($filename);
+    oledScroll($direction, $scrollSpeed, $startPage, $stopPage);
+    oledScrollDiagonal($direction, $scrollSpeed, $fixedRows, $scrollRows, $verticalOffset, $startPage, $stopPage);
+    oledScrollStop();
+     
 ## Constants
 
     PWM_FREQUENCY_DEFAULT   50.0f
@@ -56,10 +73,10 @@ PHP extension for Onion Omega IoT device https://onion.io/
 
 ## Configure the extension
 
-    $ export PATH=/usr/local/openwrt/staging_dir/host/bin/:/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin:$PATH
-    $ export TOOLCHAIN_DIR="/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2"
-    $ export STAGING_DIR="/usr/local/openwrt/staging_dir/target-mips_34kc_uClibc-0.9.33.2"
-    $ export TARGET_DIR="/usr/local/openwrt/build_dir/target-mips_34kc_uClibc-0.9.33.2/php-5.6.16"
+    $ export PATH=/usr/local/openwrt/staging_dir/host/bin/:/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin:$PATH \
+    && export TOOLCHAIN_DIR="/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2" \
+    && export STAGING_DIR="/usr/local/openwrt/staging_dir/target-mips_34kc_uClibc-0.9.33.2" \
+    && export TARGET_DIR="/usr/local/openwrt/build_dir/target-mips_34kc_uClibc-0.9.33.2/php-5.6.16"
 
     $ cd /vagrant/src
     $ /usr/local/openwrt/staging_dir/host/usr/bin/phpize --clean && /usr/local/openwrt/staging_dir/host/usr/bin/phpize && \
@@ -85,8 +102,14 @@ PHP extension for Onion Omega IoT device https://onion.io/
 ## Verify installation
 
     $ ssh root@omega-ABCD.local
-    $ php-cli -d extension=/root/omega.so -m
+    # php-cli -d extension=/root/omega.so -m
 
 You should see "omega" as part of the loaded extension.
 
+## Test pwm
+
     $ php-cli -d extension=/root/omega.so test.php
+
+## Test oled
+
+    $ php-cli -d extension=/root/omega.so test_oled.php
