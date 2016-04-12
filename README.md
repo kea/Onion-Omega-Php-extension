@@ -4,17 +4,22 @@ PHP extension for Onion Omega IoT device https://onion.io/
 ## Done
 
 * PWM expansion
+* Oled expansion
+* Relay expansion
+* Relay class helper
 
 ## Todo
 
-* Relay expansion
-* Oled expansion
+* Add PHP classes for PWM  
+* Add PHP classes for Oled
+* Add documentation
 
 # Documentation
 
 ## Functions
 
     onionSetVerbosity($level);
+    
     pwmDriverInit(int *bInitialized);
     pwmCheckInit();
     pwmSetFrequency(float freq);
@@ -36,6 +41,11 @@ PHP extension for Onion Omega IoT device https://onion.io/
     oledScroll($direction, $scrollSpeed, $startPage, $stopPage);
     oledScrollDiagonal($direction, $scrollSpeed, $fixedRows, $scrollRows, $verticalOffset, $startPage, $stopPage);
     oledScrollStop();
+    
+    relayDriverInit($devAddress);
+    relayCheckInit($devAddress, $bInitialized);
+    relaySetAllChannels($devAddress, $state);
+    relaySetChannel($devAddress, $channel, $state);
      
 ## Constants
 
@@ -108,8 +118,12 @@ You should see "omega" as part of the loaded extension.
 
 ## Test pwm
 
-    $ php-cli -d extension=/root/omega.so test.php
+    $ php-cli -d extension=/root/omega.so test_pwm.php
 
 ## Test oled
 
     $ php-cli -d extension=/root/omega.so test_oled.php
+
+## Test oled
+
+    $ php-cli -d extension=/root/omega.so test_relay.php

@@ -27,17 +27,17 @@ if test "$PHP_OMEGA" != "no"; then
 
     PHP_ADD_INCLUDE($OMEGA_DIR/include)
 
-    LIB_NAME=onionpwmexp
-    LIB_SYMBOL=pwmCheckInit
+    LIB_PWM_NAME=onionpwmexp
+    LIB_PWM_SYMBOL=pwmCheckInit
 
-    PHP_CHECK_LIBRARY($LIB_NAME,$LIB_SYMBOL,
+    PHP_CHECK_LIBRARY($LIB_PWM_NAME,$LIB_PWM_SYMBOL,
     [
-      PHP_ADD_LIBRARY_WITH_PATH($LIB_NAME, $OMEGA_DIR, OMEGA_SHARED_LIBADD)
+      PHP_ADD_LIBRARY_WITH_PATH($LIB_PWM_NAME, $OMEGA_DIR, OMEGA_SHARED_LIBADD)
       AC_DEFINE(HAVE_PWM,1,[ ])
     ],[
       AC_MSG_ERROR([wrong libonionpwmexp lib version or lib not found])
     ],[
-      -L$OMEGA_DIR/lib -l$LIB_NAME -lonioni2c -loniondebug -lm
+      -L$OMEGA_DIR/lib -l$LIB_PWM_NAME -lonioni2c -loniondebug -lm
     ])
 
     LIB_OLED_NAME=onionoledexp
@@ -53,6 +53,19 @@ if test "$PHP_OMEGA" != "no"; then
       -L$OMEGA_DIR/lib -l$LIB_OLED_NAME -lonioni2c -loniondebug -lm
     ])
 
-    PHP_NEW_EXTENSION(omega, php_omega.c php_pwm.c php_oled.c, $ext_shared)
+    LIB_RELAY_NAME=onionrelayexp
+    LIB_RELAY_SYMBOL=relayCheckInit
+
+    PHP_CHECK_LIBRARY($LIB_RELAY_NAME,$LIB_RELAY_SYMBOL,
+    [
+      PHP_ADD_LIBRARY_WITH_PATH($LIB_RELAY_NAME, $OMEGA_DIR, OMEGA_SHARED_LIBADD)
+      AC_DEFINE(HAVE_OLED,1,[ ])
+    ],[
+      AC_MSG_ERROR([wrong libonionrelaydexp lib version or lib not found])
+    ],[
+      -L$OMEGA_DIR/lib -l$LIB_RELAY_NAME -lonioni2c -loniondebug -lm
+    ])
+
+    PHP_NEW_EXTENSION(omega, php_omega.c php_pwm.c php_oled.c php_relay.c, $ext_shared)
     PHP_SUBST(OMEGA_SHARED_LIBADD)
 fi

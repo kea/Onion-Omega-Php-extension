@@ -9,6 +9,7 @@
 #include "php_omega.h"
 #include "php_pwm.h"
 #include "php_oled.h"
+#include "php_relay.h"
 
 phpOnionSetVerbosity(long verbosity)
 {
@@ -53,6 +54,11 @@ zend_function_entry omega_functions[] =
     ZEND_FE(oledScroll, arginfo_oledScroll)
     ZEND_FE(oledScrollDiagonal, arginfo_oledScrollDiagonal)
     ZEND_FE(oledScrollStop, NULL)
+
+    ZEND_FE(relayDriverInit, arginfo_relayDriverInit)
+    ZEND_FE(relayCheckInit, arginfo_relayCheckInit)
+    ZEND_FE(relaySetChannel, arginfo_relaySetChannel)
+    ZEND_FE(relaySetAllChannels, arginfo_relaySetAllChannels)
 
     {NULL,NULL,NULL} /* Marks the end of function entries */
 };
