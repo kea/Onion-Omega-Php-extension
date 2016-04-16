@@ -10,16 +10,14 @@
 
 PHP_FUNCTION(relayDriverInit)
 {
-    int addr, status;
+    int addr;
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &addr) == FAILURE)
     {
         RETURN_FALSE;
     }
 
-    status = relayDriverInit(addr);
-
-    RETURN_LONG(status);
+    RETURN_BOOL(relayDriverInit(addr) != EXIT_FAILURE);
 }
 
 int phpRelayCheckInit(int addr, zval *bInitialized)
@@ -43,7 +41,7 @@ PHP_FUNCTION(relayCheckInit)
         RETURN_FALSE;
     }
 
-    RETURN_LONG(phpRelayCheckInit(addr, bInitialized));
+    RETURN_BOOL(phpRelayCheckInit(addr, bInitialized) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(relaySetChannel)
@@ -55,7 +53,7 @@ PHP_FUNCTION(relaySetChannel)
         RETURN_FALSE;
     }
 
-    RETURN_LONG(relaySetChannel(addr, channel, state));
+    RETURN_BOOL(relaySetChannel(addr, channel, state) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(relaySetAllChannels)
@@ -67,5 +65,5 @@ PHP_FUNCTION(relaySetAllChannels)
         RETURN_FALSE;
     }
 
-    RETURN_LONG(relaySetAllChannels(addr, state));
+    RETURN_BOOL(relaySetAllChannels(addr, state) != EXIT_FAILURE);
 }

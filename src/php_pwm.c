@@ -20,7 +20,7 @@ int phpPwmDriverInit()
 
 PHP_FUNCTION(pwmDriverInit)
 {
-    RETURN_LONG(phpPwmDriverInit());
+    RETURN_BOOL(phpPwmDriverInit() != EXIT_FAILURE);
 }
 
 int phpPwmCheckInit(zval *bInit)
@@ -43,7 +43,7 @@ PHP_FUNCTION(pwmCheckInit)
         RETURN_FALSE;
     }
 
-    RETURN_LONG(phpPwmCheckInit(bInit));
+    RETURN_BOOL(phpPwmCheckInit(bInit) != EXIT_FAILURE);
 }
 
 // disable the chip - set oscillator to sleep
@@ -58,7 +58,7 @@ int phpPwmDisableChip()
 
 PHP_FUNCTION(pwmDisableChip)
 {
-    RETURN_LONG(phpPwmDisableChip());
+    RETURN_BOOL(phpPwmDisableChip() != EXIT_FAILURE);
 }
 
 int phpPwmSetFrequency(int freq)
@@ -79,7 +79,7 @@ PHP_FUNCTION(pwmSetFrequency)
         RETURN_FALSE;
     }
 
-    RETURN_LONG(phpPwmSetFrequency(freq));
+    RETURN_BOOL(phpPwmSetFrequency(freq) != EXIT_FAILURE);
 }
 
 int phpPwmSetupDriver(int driverNum, float duty, float delay)
@@ -102,5 +102,5 @@ PHP_FUNCTION(pwmSetupDriver)
         RETURN_FALSE;
     }
 
-    RETURN_LONG(phpPwmSetupDriver(driverNum, duty, delay));
+    RETURN_BOOL(phpPwmSetupDriver(driverNum, duty, delay) != EXIT_FAILURE);
 }

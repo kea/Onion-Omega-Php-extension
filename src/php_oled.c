@@ -10,99 +10,77 @@
 
 PHP_FUNCTION(oledCheckInit)
 {
-	int 	status;
-
-	status 	= oledCheckInit();
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledCheckInit() != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledDriverInit)
 {
-	int 	status;
-
-	status 	= oledDriverInit();
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledDriverInit() != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledClear)
 {
-	int 	status;
-
-	status 	= oledClear();
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledClear() != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledSetDisplayPower)
 {
-	int 	status, bOn;
+	int 	bOn;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &bOn) == FAILURE)
     {
         RETURN_FALSE;
     }
 
-	status 	= oledSetDisplayPower(bOn);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledSetDisplayPower(bOn) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledSetDisplayMode)
 {
-	int 	status, bInvert;
+	int 	bInvert;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &bInvert) == FAILURE)
     {
         RETURN_FALSE;
     }
 
-	status 	= oledSetDisplayMode (bInvert);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledSetDisplayMode(bInvert) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledSetBrightness)
 {
-	int 	status, brightness;
+	int 	brightness;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &brightness) == FAILURE)
     {
         RETURN_FALSE;
     }
 
-	status 	= oledSetBrightness(brightness);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledSetBrightness(brightness) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledSetDim)
 {
-	int 	status, bDim;
+	int 	bDim;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &bDim) == FAILURE)
     {
         RETURN_FALSE;
     }
 
-	status 	= oledSetDim (bDim);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledSetDim (bDim) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledSetMemoryMode)
 {
-	int 	status, mode;
+	int 	mode;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "l", &mode) == FAILURE)
     {
         RETURN_FALSE;
     }
 
-	status 	= oledSetMemoryMode (mode);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledSetMemoryMode(mode) != EXIT_FAILURE);
 }
 
 
@@ -115,23 +93,19 @@ PHP_FUNCTION(oledSetCursor)
         RETURN_FALSE;
     }
 
-	status 	= oledSetCursor(row, col);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledSetCursor(row, col) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledSetColumnAddressing)
 {
-	int 	status, startPixel, endPixel;
+	int 	startPixel, endPixel;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ll", &startPixel, &endPixel) == FAILURE)
     {
         RETURN_FALSE;
     }
 
-	status 	= oledSetColumnAddressing(startPixel, endPixel);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledSetColumnAddressing(startPixel, endPixel) != EXIT_FAILURE);
 }
 
 
@@ -148,9 +122,7 @@ PHP_FUNCTION(oledWriteChar)
     }
 	c 	= (char)msg[0];
 
-	status 	= oledWriteChar(c);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledWriteChar(c) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledWrite)
@@ -164,17 +136,14 @@ PHP_FUNCTION(oledWrite)
         RETURN_NULL();
     }
 
-	status 	= oledWrite((char*)msg);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledWrite((char*)msg) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledDrawFromFile)
 {
-	int 		status;
 	uint8_t		*buffer;
 	char 	*filename;
-	int filename_len;
+	int status, filename_len;
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &filename, &filename_len) == FAILURE)
     {
@@ -187,16 +156,11 @@ PHP_FUNCTION(oledDrawFromFile)
 	// read LCD data from file
 	status 	= oledReadLcdFile ((char*)filename, buffer);
 
-	// draw data onto screen
-	status 	= oledDraw (buffer, OLED_EXP_WIDTH*OLED_EXP_HEIGHT/8);
-
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledDraw(buffer, OLED_EXP_WIDTH*OLED_EXP_HEIGHT/8) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledScroll)
 {
-	int 	status;
 	int 	direction, scrollSpeed, startPage, stopPage;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "llll", &direction, &scrollSpeed, &startPage, &stopPage) == FAILURE)
@@ -204,9 +168,7 @@ PHP_FUNCTION(oledScroll)
         RETURN_FALSE;
     }
 
-	status 	= oledScroll(direction, scrollSpeed, startPage, stopPage);
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledScroll(direction, scrollSpeed, startPage, stopPage) != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledScrollDiagonal)
@@ -221,14 +183,10 @@ PHP_FUNCTION(oledScrollDiagonal)
 
 	status 	= oledScrollDiagonal(direction, scrollSpeed, fixedRows, scrollRows, verticalOffset, startPage, stopPage);
 
-	RETURN_LONG(status);
+	RETURN_BOOL(status != EXIT_FAILURE);
 }
 
 PHP_FUNCTION(oledScrollStop)
 {
-	int 	status;
-
-	status 	= oledScrollStop ();
-
-	RETURN_LONG(status);
+	RETURN_BOOL(oledScrollStop() != EXIT_FAILURE);
 }

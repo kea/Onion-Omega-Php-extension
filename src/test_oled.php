@@ -1,35 +1,15 @@
 <?php
 
-define('EXIT_FAILURE', 1);
+include(__DIR__.'/../examples/OledExp.php');
 
-$init = 1;
-$clear = 0;
 $message = "Hello PHP world!";
 
-// check if OLED Expansion is present
-$status = oledCheckInit();
+$oled = new \Omega\OledExp();
 
-// exit the app if i2c reads fail
-if ($status == EXIT_FAILURE) {
-    echo "> ERROR: OLED Expansion not found!\n";
-    return 0;
+if (!$oled->clear()) {
+    echo "Error: display clear failed!\n";
 }
 
-// initialize display
-if ($init == 1 ) {
-    $status = oledDriverInit();
-    if ($status == EXIT_FAILURE) {
-        echo "main-oled-exp:: display init failed!\n";
-    }
+if (!$oled->write($message)) {
+    echo "Error: display write failed!\n";
 }
-
-// clear screen
-if ($clear == 1 ) {
-    echo "> Clearing display\n";
-    $status = oledClear();
-    if ($status == EXIT_FAILURE) {
-        echo "main-oled-exp:: display clear failed!\n";
-    }
-}
-
-$status	= oledWrite($message);

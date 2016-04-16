@@ -93,7 +93,7 @@ zend_module_entry omega_module_entry = {
     NULL, /* Request init */
     NULL, /* Request shutdown */
     NULL, /* Module information */
-    "0.4", /* Replace with version number for your extension */
+    "0.5", /* Version number */
     STANDARD_MODULE_PROPERTIES
 };
 /* }}} */
