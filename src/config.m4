@@ -66,6 +66,6 @@ if test "$PHP_OMEGA" != "no"; then
       -L$OMEGA_DIR/lib -l$LIB_RELAY_NAME -lonioni2c -loniondebug -lm
     ])
 
-    PHP_NEW_EXTENSION(omega, php_omega.c php_pwm.c php_oled.c php_relay.c, $ext_shared)
+    PHP_NEW_EXTENSION(omega, php_omega.c php_pwm.c php_oled.c php_relay.c php_i2c.c, $ext_shared)
     PHP_SUBST(OMEGA_SHARED_LIBADD)
 fi

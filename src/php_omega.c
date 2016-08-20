@@ -10,6 +10,7 @@
 #include "php_pwm.h"
 #include "php_oled.h"
 #include "php_relay.h"
+#include "php_i2c.h"
 
 phpOnionSetVerbosity(long verbosity)
 {
@@ -60,6 +61,12 @@ zend_function_entry omega_functions[] =
     ZEND_FE(relaySetChannel, arginfo_relaySetChannel)
     ZEND_FE(relaySetAllChannels, arginfo_relaySetAllChannels)
 
+    ZEND_FE(i2cWriteBuffer, arginfo_i2cWriteBuffer)
+    ZEND_FE(i2cWrite, arginfo_i2cWrite)
+    ZEND_FE(i2cWriteBytes, arginfo_i2cWriteBytes)
+    ZEND_FE(i2cRead, arginfo_i2cRead)
+    ZEND_FE(i2cReadByte, arginfo_i2cReadByte)
+
     {NULL,NULL,NULL} /* Marks the end of function entries */
 };
 
@@ -93,7 +100,7 @@ zend_module_entry omega_module_entry = {
     NULL, /* Request init */
     NULL, /* Request shutdown */
     NULL, /* Module information */
-    "0.5", /* Version number */
+    "0.6", /* Version number */
     STANDARD_MODULE_PROPERTIES
 };
 /* }}} */
