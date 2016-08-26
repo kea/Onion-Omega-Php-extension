@@ -6,11 +6,12 @@ PHP extension for Onion Omega IoT device https://onion.io/
 * PWM expansion
 * Oled expansion
 * Relay expansion
+* I2C functions
 * Relay class helper
+* PWM class helper
 
 ## Todo
 
-* Add PHP classes for PWM  
 * Add PHP classes for Oled
 * Add documentation
 

@@ -18,7 +18,7 @@ class PwmExp
     public function checkInit()
     {
         $bInitialized = 0;
-        $status = pwmCheckInit($bInitialized);
+        $status = \pwmCheckInit($bInitialized);
         $this->initialized = $bInitialized != 0;
 
         return $status;
@@ -31,21 +31,21 @@ class PwmExp
 
     public function driverInit()
     {
-        return pwmDriverInit();
+        return \pwmDriverInit();
     }
 
     public function disableChip()
     {
-        return pwmDisableChip();
+        return \pwmDisableChip();
     }
 
     public function setFrequency($frequency)
     {
-        return pwmSetFrequency($frequency);
+        return \pwmSetFrequency($frequency);
     }
 
     public function setupDriver($channel, $duty, $delay)
     {
-        return pwmSetupDriver($channel, $duty, $delay);
+        return \pwmSetupDriver($channel, $duty, $delay);
     }
 }

@@ -17,7 +17,7 @@ class OledExp
 
     public function checkInit()
     {
-        return oledCheckInit();
+        return \oledCheckInit();
     }
 
     public function isInitialized()
@@ -27,16 +27,16 @@ class OledExp
 
     public function driverInit()
     {
-        return oledDriverInit();
+        return \oledDriverInit();
     }
 
     public function clear()
     {
-        return oledClear();
+        return \oledClear();
     }
 
     public function write($message)
     {
-        return oledWrite($message);
+        return \oledWrite($message);
     }
 }

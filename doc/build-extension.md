@@ -17,13 +17,15 @@
     $ cd openwrt
     $ sudo apt-get install g++-multilib
     $ echo "src-git onion https://github.com/OnionIoT/OpenWRT-Packages.git" >> feeds.conf.default
+    $ echo "src-git onion_kea https://github.com/kea/openwrt-php7-package.git" >> feeds.conf.default
     $ scripts/feeds update -a
-    $ scripts/feeds install php5
+    $ scripts/feeds install php7
     $ scripts/feeds install libonionpwmexp
     
-    $ make tools/install # when menuconfig start, select language->php->php5 as M, php5-cli as M
+    $ make menuconfig # when menuconfig start, select at least language => php => php7 as [*] and php7-cli as [*]
+    $ make tools/install
     $ make toolchain/install
-    $ make package/php5/compile
+    $ make package/php7/compile
     $ make package/i2c-exp-driver/compile
 
 ### Configure the extension
@@ -31,7 +33,7 @@
     $ export PATH=/usr/local/openwrt/staging_dir/host/bin/:/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin:$PATH \
     && export TOOLCHAIN_DIR="/usr/local/openwrt/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2" \
     && export STAGING_DIR="/usr/local/openwrt/staging_dir/target-mips_34kc_uClibc-0.9.33.2" \
-    && export TARGET_DIR="/usr/local/openwrt/build_dir/target-mips_34kc_uClibc-0.9.33.2/php-5.6.16"
+    && export TARGET_DIR="/usr/local/openwrt/build_dir/target-mips_34kc_uClibc-0.9.33.2/php-7.0.10"
 
     $ cd /vagrant/src
     $ /usr/local/openwrt/staging_dir/host/usr/bin/phpize --clean && /usr/local/openwrt/staging_dir/host/usr/bin/phpize && \
@@ -52,7 +54,7 @@
 
 ### Copy the module to Onion Ω
 
-    $ scp modules/omega.so root@onion-ABCD.local:
+    $ scp modules/omega.so root@omega-ABCD.local:
 
 ### Verify installation
 
@@ -62,6 +64,8 @@
 You should see "omega" as part of the loaded extension.
 
 ## Test
+
+Copy src/test_\*.php and examples/\*.php to your omega.
 
 ### PWM (Servo)
 

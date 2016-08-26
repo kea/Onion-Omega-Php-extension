@@ -48,13 +48,13 @@ class RelayExp
 
     public function driverInit()
     {
-        return relayDriverInit($this->address);
+        return \relayDriverInit($this->address);
     }
 
     public function checkInit()
     {
         $bInitialized = 0;
-        $status = relayCheckInit($this->address, $bInitialized);
+        $status = \relayCheckInit($this->address, $bInitialized);
         $this->initialized = $bInitialized != 0;
 
         return $status;
@@ -69,7 +69,7 @@ class RelayExp
     {
         $this->assertState($state);
 
-        return relaySetAllChannels($this->address, $state);
+        return \relaySetAllChannels($this->address, $state);
     }
 
     public function setChannel($channel, $state)
@@ -77,6 +77,6 @@ class RelayExp
         $this->assertChannel($channel);
         $this->assertState($state);
 
-        return relaySetChannel($this->address, $channel, $state);
+        return \relaySetChannel($this->address, $channel, $state);
     }
 }
