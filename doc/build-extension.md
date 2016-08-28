@@ -65,16 +65,4 @@ You should see "omega" as part of the loaded extension.
 
 ## Test
 
-Copy src/test_\*.php and examples/\*.php to your omega.
-
-### PWM (Servo)
-
-    $ php-cli -d extension=/root/omega.so test_pwm.php
-
-### OLED
-
-    $ php-cli -d extension=/root/omega.so test_oled.php
-
-### Relay
-
-    $ php-cli -d extension=/root/omega.so test_relay.php
+Check [demo](https://github.com/kea/onion-omega-php-demo) project
