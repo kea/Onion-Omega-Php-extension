@@ -29,21 +29,21 @@ int phpPwmCheckInit(zval *bInit)
     int bInitTmp;
 
     status = pwmCheckInit (&bInitTmp);
-    Z_LVAL_P(bInit) = bInitTmp;
+    ZVAL_LONG(bInit, bInitTmp);
 
     return status;
 }
 
 PHP_FUNCTION(pwmCheckInit)
 {
-    zval *bInit;
+    zval bInit;
 
     if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &bInit) == FAILURE)
     {
         RETURN_FALSE;
     }
 
-    RETURN_BOOL(phpPwmCheckInit(bInit) != EXIT_FAILURE);
+    RETURN_BOOL(phpPwmCheckInit(&bInit) != EXIT_FAILURE);
 }
 
 // disable the chip - set oscillator to sleep
