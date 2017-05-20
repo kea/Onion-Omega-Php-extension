@@ -44,8 +44,8 @@ PHP_FUNCTION(i2cWriteBuffer)
 
     free(tmpBuffer);
 
-    RETURN_INT(status); */
-    RETURN_INT(0);
+    RETURN_LONG(status); */
+    RETURN_LONG(0);
 }
 
 // write n bytes to the i2c bus
@@ -61,7 +61,7 @@ PHP_FUNCTION(i2cWrite)
         RETURN_FALSE;
     }
 
-    RETURN_INT(i2c_write(devNum, devAddr, addr, val));
+    RETURN_LONG(i2c_write(devNum, devAddr, addr, val));
 }
 
 // write a specified number of bytes to the i2c bus
@@ -78,7 +78,7 @@ PHP_FUNCTION(i2cWriteBytes)
         RETURN_FALSE;
     }
 
-    RETURN_INT(i2c_writeBytes(devNum, devAddr, addr, val, numBytes));
+    RETURN_LONG(i2c_writeBytes(devNum, devAddr, addr, val, numBytes));
 }
 
 // read a byte from the i2c bus
@@ -113,9 +113,9 @@ PHP_FUNCTION(i2cRead)
     status = i2c_read(devNum, devAddr, addr, tmpBuffer, numBytes);
     free(tmpBuffer);
 
-    RETURN_INT(status); */
+    RETURN_LONG(status); */
 
-    RETURN_INT(0);
+    RETURN_LONG(0);
 }
 
 // read a single byte from the i2c bus
@@ -136,7 +136,7 @@ PHP_FUNCTION(i2cReadByte)
     status = i2c_readByte(devNum, devAddr, addr, &tmpVal);
     Z_LVAL_P(val) = tmpVal;
 
-    RETURN_INT(status);
+    RETURN_LONG(status);
 }
 
 
