@@ -16,8 +16,9 @@
 
     $ cd openwrt
     $ sudo apt-get install g++-multilib
-    $ echo "src-git onion https://github.com/OnionIoT/OpenWRT-Packages.git" >> feeds.conf.default
+    $ echo "src-git onion https://github.com/OnionIoT/OpenWRT-Packages.git;omega2" >> feeds.conf.default
     $ echo "src-git onion_kea https://github.com/kea/openwrt-php7-package.git" >> feeds.conf.default
+    
     $ scripts/feeds update -a
     $ scripts/feeds install php7
     $ scripts/feeds install libonionpwmexp
